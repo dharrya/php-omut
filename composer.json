@@ -1,0 +1,28 @@
+{
+	"name": "bitrix/php-ui-tests",
+	"minimum-stability": "dev",
+	"authors": [
+		{
+			"name": "Dharrya",
+			"email": "dharrya@1c-bitrix.ru"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/dharrya/phpunit-selenium"
+		}
+	],
+	"require": {
+		"phpunit/phpunit": "3.8.*",
+		"phpunit/phpunit-selenium": "log_feature-dev"
+	},
+	"autoload": {
+		"psr-0": {
+			"": ""
+		},
+		"classmap": [
+			"repos"
+		]
+	}
+}
