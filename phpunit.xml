@@ -13,4 +13,17 @@
             <directory>test</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="\lib\Logger" file="lib/Logger.php" >
+            <arguments>
+                <string>reports</string>
+            </arguments>
+        </listener>
+        <listener class="TestScreenshotListener" file="listeners/ScreenshotListener.php">
+            <arguments>
+                <string>reports/screenshots</string>
+            </arguments>
+        </listener>
+    </listeners>
 </phpunit>

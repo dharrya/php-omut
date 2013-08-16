@@ -21,14 +21,14 @@ namespace lib;
  * @method string value($newValue = NULL) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
  * @method string text() Get content of ordinary elements
  *
- * @method static WebItem byClassName(string $value)
- * @method static WebItem byCssSelector(string $value)
- * @method static WebItem byId(string $value)
- * @method static WebItem byLinkText(string $value)
- * @method static WebItem byPartialLinkText(string $value)
- * @method static WebItem byName(string $value)
- * @method static WebItem byTag(string $value)
- * @method static WebItem byXPath(string $value)
+ * @method static \lib\WebItem byClassName($value)
+ * @method static \lib\WebItem byCssSelector($value)
+ * @method static \lib\WebItem byId($value)
+ * @method static \lib\WebItem byLinkText($value)
+ * @method static \lib\WebItem byPartialLinkText($value)
+ * @method static \lib\WebItem byName($value)
+ * @method static \lib\WebItem byTag($value)
+ * @method static \lib\WebItem byXPath($value)
  */
 class WebItem
 {
@@ -63,9 +63,9 @@ class WebItem
 	/**
 	 * Initialize item by Selenium Element Accessor
 	 *
-	 * @param $accessor
-	 * @param $arguments
-	 * @return NullWebItem|static
+	 * @param string $accessor
+	 * @param mixed $arguments
+	 * @return static
 	 */
 	public static function __callStatic($accessor, $arguments)
 	{

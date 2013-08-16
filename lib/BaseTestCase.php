@@ -23,42 +23,37 @@ class BaseTestCase
 		self::shareSession(true);
 	}
 
-	public function setUp()
+	public function url($value = null)
 	{
-//		foo:initBar("lala");
-//		die('sss');
-//		$this->setBrowser("chrome");
-//
-//		die(var_dump($this->baseUrl));
-//		$this->setBrowserUrl($this->baseUrl);
+		if ($value)
+			$this->addMessage(sprintf("Пытаемся открыть урл: %s", $value));
+
+		return parent::url($value);
 	}
 
 	public function tearDown()
 	{
 		$jsErrors = $this->log(self::LOG_TYPE);
-		if (!empty($jsErrors))
-			$this->logJsErrors($jsErrors);
-	}
-
-	protected function runTest()
-	{
-		printf(
-			"----------Starting test '%s'---------\n",
-			$this->getTestId()
-		);
-
-		parent::runTest();
-	}
-
-	protected function logJsErrors(array $jsErrors)
-	{
-		printf(
-			"Oooops, some JS Error on page: %s\nErrors messages:\n",
-			$this->url()
-		);
-		foreach($jsErrors as $i => $error)
-		{
-			printf("%d: \x1B[31m %s \x1B[0m \n", $i, $error["message"]);
+		if (!empty($jsErrors)) {
+			$this->addMessage(
+				sprintf(
+					"Browser Error occurred on page: %s\nErrors messages: %s",
+					$this->url(), json_encode($jsErrors)
+				)
+			);
 		}
+	}
+
+	/**
+	 * @return DataBase
+	 */
+	protected function db()
+	{
+		return DataBase::getInstance();
+	}
+
+	protected function addMessage($message)
+	{
+		Logger::addMessage($message);
 	}
 }
