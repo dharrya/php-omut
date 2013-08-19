@@ -2,7 +2,6 @@
 namespace lib;
 
 class Logger
-	extends \PHPUnit_Util_Printer
 	implements \PHPUnit_Framework_TestListener
 {
 	private static $filePath = "";
@@ -10,11 +9,6 @@ class Logger
 	public function __construct($directory)
 	{
 		self::$filePath = $directory."/execution_".date("d-m-Y\TH-i-s").".log";
-	}
-
-	public function flush()
-	{
-
 	}
 
 	public static function addMessage($message)

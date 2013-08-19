@@ -20,7 +20,7 @@
                 <string>reports</string>
             </arguments>
         </listener>
-        <listener class="TestScreenshotListener" file="listeners/ScreenshotListener.php">
+        <listener class="ScreenshotListener" file="listeners/ScreenshotListener.php">
             <arguments>
                 <string>reports/screenshots</string>
             </arguments>

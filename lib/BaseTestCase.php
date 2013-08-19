@@ -13,14 +13,20 @@ class BaseTestCase
 	public function __construct($name = NULL, array $data = array(), $dataName = '')
 	{
 		parent::__construct($name, $data, $dataName);
-		$this->setBrowser("chrome");
-		$this->setBrowserUrl($this->baseUrl);
-		Runtime::setSession($this->prepareSession());
+		$this->baseUrl = $this->conf()->site()->Url;
 	}
 
 	public static function setUpBeforeClass()
 	{
 		self::shareSession(true);
+
+	}
+
+	public function setUp()
+	{
+		$this->setBrowser("chrome");
+		$this->setBrowserUrl($this->baseUrl);
+		Runtime::setSession($this->prepareSession());
 	}
 
 	public function url($value = null)
@@ -42,6 +48,14 @@ class BaseTestCase
 				)
 			);
 		}
+	}
+
+	/**
+	 * @return Config
+	 */
+	protected function conf()
+	{
+		return Config::getInstance();
 	}
 
 	/**
