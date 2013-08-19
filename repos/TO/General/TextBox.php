@@ -6,7 +6,7 @@ class TO_General_TextBox
 	/**
 	 * USER_LOGIN input
 	 *
-	 * @return \lib\WebItem
+	 * @return \lib\Item\WebItem
 	 */
 	public static function userLogin()
 	{
@@ -16,7 +16,7 @@ class TO_General_TextBox
 	/**
 	 * USER_PASSWORD input
 	 *
-	 * @return \lib\WebItem
+	 * @return \lib\Item\WebItem
 	 */
 	public static function userPassword()
 	{

@@ -37,7 +37,6 @@ class Config {
 
 	private function __construct()
 	{
-		$this->configs = new \stdClass();
 		if (file_exists(self::DEFAULT_FILE_PATH) && is_file(self::DEFAULT_FILE_PATH))
 			$this->configs = json_decode(file_get_contents(self::DEFAULT_FILE_PATH));
 		else

@@ -25,13 +25,15 @@ class WebTest
 		Cases_General_Login::toBus($login, $password);
 		$this->assertFalse(TO_Module_Main::loginForm()->exists(), "Login Failed :`(");
 
+		TO_Module_Main::logoutForm()->assertTextContain("Мой профиль", "Link to user profile not found after login");
+
 		Cases_General_Login::logoutBus();
 		$this->assertTrue(TO_Module_Main::loginForm()->exists(), "Logout Failed :`(");
+
 	}
 
 	public function testAdminLoginInDB()
 	{
-
 		$query = $this->db()->query("SELECT LOGIN FROM b_user;");
 		$logins = $query->fetchAll();
 		$this->assertContains(array("LOGIN" => "admin"), $logins);

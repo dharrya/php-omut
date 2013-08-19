@@ -1,5 +1,7 @@
 <?php
-namespace lib;
+namespace lib\Item;
+
+use lib\Exception\Element\NotFound;
 
 class NullWebItem
 	extends WebItem
@@ -21,12 +23,7 @@ class NullWebItem
 	 */
 	public function __call($command, $arguments)
 	{
-		throw new Exception\Element\NotFound('Trying use a non-existent object');
-	}
-
-	public function exists()
-	{
-		return $this->isExist;
+		throw new NotFound('Trying use a non-existent object');
 	}
 
 	public function setExist($isExist = true)

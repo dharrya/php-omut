@@ -1,5 +1,13 @@
 <?php
-namespace lib;
+/**
+* Bitrix Framework
+* @package bitrix
+* @subpackage security
+* @copyright 2001-2013 Bitrix
+*/
+
+namespace lib\Item;
+use lib\Exception\Element\NotFound;
 
 /**
  * Class WebItem
@@ -21,16 +29,8 @@ namespace lib;
  * @method string value($newValue = NULL) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
  * @method string text() Get content of ordinary elements
  *
- * @method static \lib\WebItem byClassName($value)
- * @method static \lib\WebItem byCssSelector($value)
- * @method static \lib\WebItem byId($value)
- * @method static \lib\WebItem byLinkText($value)
- * @method static \lib\WebItem byPartialLinkText($value)
- * @method static \lib\WebItem byName($value)
- * @method static \lib\WebItem byTag($value)
- * @method static \lib\WebItem byXPath($value)
  */
-class WebItem
+abstract class BaseItem
 {
 	/** @var \PHPUnit_Extensions_Selenium2TestCase_Element $element */
 	protected $element = null;
@@ -61,27 +61,6 @@ class WebItem
 	}
 
 	/**
-	 * Initialize item by Selenium Element Accessor
-	 *
-	 * @param string $accessor
-	 * @param mixed $arguments
-	 * @return static
-	 */
-	public static function __callStatic($accessor, $arguments)
-	{
-		try {
-			$element = call_user_func_array(
-				array(Runtime::session(), $accessor), $arguments
-			);
-			$result = new static($element);
-		} catch (\PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-			$result = new NullWebItem();
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Delegate method calls to the Selenium Element
 	 *
 	 * @param  string $command
@@ -92,7 +71,7 @@ class WebItem
 	public function __call($command, $arguments)
 	{
 		if (!$this->isExist)
-			throw new Exception\Element\NotFound('Trying use a non-existent object');
+			throw new NotFound('Trying use a non-existent object');
 
 		$result = call_user_func_array(
 			array($this->element, $command), $arguments
@@ -117,4 +96,13 @@ class WebItem
 		$this->isExist = $isExist;
 	}
 
+	/**
+	 * Return innerHTML element attribute
+	 *
+	 * @return string
+	 */
+	public function innerHtml()
+	{
+		return $this->attribute('innerHTML');
+	}
 } 
