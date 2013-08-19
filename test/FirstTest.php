@@ -38,4 +38,10 @@ class WebTest
 		$logins = $query->fetchAll();
 		$this->assertContains(array("LOGIN" => "admin"), $logins);
 	}
+
+	public function testTitle()
+	{
+		$this->url("/");
+		$this->assertContains("Демонстрационная", $this->title());
+	}
 }

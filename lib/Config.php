@@ -1,13 +1,5 @@
 <?php
-/**
-* Bitrix Framework
-* @package bitrix
-* @subpackage security
-* @copyright 2001-2013 Bitrix
-*/
-
 namespace lib;
-
 
 use lib\Exception\ConfigNotFound;
 
@@ -43,16 +35,27 @@ class Config {
 			$this->configs = json_decode(self::DEFAULT_CONFIGS);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function db()
 	{
 		return $this->getConfig(self::CONFIG_DB);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function site()
 	{
 		return $this->getConfig(self::CONFIG_SITE);
 	}
 
+	/**
+	 * @param string $type
+	 * @return mixed
+	 * @throws Exception\ConfigNotFound
+	 */
 	public function getConfig($type)
 	{
 		if (!isset($this->configs->$type))
@@ -61,17 +64,22 @@ class Config {
 		return $this->configs->$type;
 	}
 
+	/**
+	 * @param string $configString
+	 */
 	public function initFromJson($configString)
 	{
 		$this->configs = json_decode($configString);
 	}
 
+	/**
+	 * @return Config
+	 */
 	public static function getInstance()
 	{
-		if(is_null(self::$instance))
-		{
+		if(!self::$instance)
 			self::$instance = new Config();
-		}
+
 		return self::$instance;
 	}
 

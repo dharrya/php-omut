@@ -2,6 +2,8 @@
 namespace lib;
 
 
+use lib\Helper\JSErrorHelper;
+
 class BaseTestCase
 	extends \PHPUnit_Extensions_Selenium2TestCase
 {
@@ -16,12 +18,18 @@ class BaseTestCase
 		$this->baseUrl = $this->conf()->site()->Url;
 	}
 
+	/**
+	 *
+	 */
 	public static function setUpBeforeClass()
 	{
 		self::shareSession(true);
 
 	}
 
+	/**
+	 *
+	 */
 	public function setUp()
 	{
 		$this->setBrowser("chrome");
@@ -29,6 +37,10 @@ class BaseTestCase
 		Runtime::setSession($this->prepareSession());
 	}
 
+	/**
+	 * @param null|string $value
+	 * @return string|void
+	 */
 	public function url($value = null)
 	{
 		if ($value)
@@ -37,9 +49,13 @@ class BaseTestCase
 		return parent::url($value);
 	}
 
+	/**
+	 *
+	 */
 	public function tearDown()
 	{
 		$jsErrors = $this->log(self::LOG_TYPE);
+		$jsErrors = JSErrorHelper::filterErrors($jsErrors);
 		if (!empty($jsErrors)) {
 			$this->addMessage(
 				sprintf(
@@ -66,6 +82,9 @@ class BaseTestCase
 		return DataBase::getInstance();
 	}
 
+	/**
+	 * @param $message
+	 */
 	protected function addMessage($message)
 	{
 		Logger::addMessage($message);

@@ -8,10 +8,7 @@ class NullWebItem
 {
 	protected $isExist = false;
 
-	public function __construct()
-	{
-
-	}
+	public function __construct() {}
 
 	/**
 	 * Delegate method calls to the Selenium Element
@@ -26,6 +23,9 @@ class NullWebItem
 		throw new NotFound('Trying use a non-existent object');
 	}
 
+	/**
+	 * @param bool $isExist
+	 */
 	public function setExist($isExist = true)
 	{
 		$this->isExist = false;
