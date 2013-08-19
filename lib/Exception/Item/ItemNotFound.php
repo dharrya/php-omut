@@ -1,9 +1,9 @@
 <?php
-namespace lib\Exception\Element;
+namespace lib\Exception\Item;
 
 use lib\Exception\Base;
 
-class NotFound
+class ItemNotFound
 	extends Base
 {
 

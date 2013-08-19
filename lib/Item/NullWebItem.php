@@ -1,7 +1,7 @@
 <?php
 namespace lib\Item;
 
-use lib\Exception\Element\NotFound;
+use lib\Exception\Item\ItemNotFound;
 
 class NullWebItem
 	extends WebItem
@@ -15,12 +15,12 @@ class NullWebItem
 	 *
 	 * @param  string $command
 	 * @param  array $arguments
-	 * @throws \lib\Exception\Element\NotFound
+	 * @throws \lib\Exception\Item\ItemNotFound
 	 * @return mixed
 	 */
 	public function __call($command, $arguments)
 	{
-		throw new NotFound('Trying use a non-existent object');
+		throw new ItemNotFound('Trying use a non-existent object');
 	}
 
 	/**

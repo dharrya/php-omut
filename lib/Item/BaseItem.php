@@ -1,6 +1,6 @@
 <?php
 namespace lib\Item;
-use lib\Exception\Element\NotFound;
+use lib\Exception\Item\ItemNotFound;
 
 /**
  * Class WebItem
@@ -19,7 +19,7 @@ use lib\Exception\Element\NotFound;
  * @method bool selected() Checks the state of an option or other form element
  * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
  * @method void submit() Submits a form; can be called on its children
- * @method string value($newValue = NULL) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
+ * @method string value($newValue = null) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
  * @method string text() Get content of ordinary elements
  *
  */
@@ -56,15 +56,15 @@ abstract class BaseItem
 	/**
 	 * Delegate method calls to the Selenium Element
 	 *
-	 * @param  string $command
-	 * @param  array $arguments
-	 * @throws \lib\Exception\Element\NotFound
+	 * @param string $command
+	 * @param array $arguments
+	 * @throws \lib\Exception\Item\ItemNotFound
 	 * @return mixed
 	 */
 	public function __call($command, $arguments)
 	{
 		if (!$this->isExist)
-			throw new NotFound('Trying use a non-existent object');
+			throw new ItemNotFound('Trying use a non-existent object');
 
 		$result = call_user_func_array(
 			array($this->element, $command), $arguments

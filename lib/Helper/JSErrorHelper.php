@@ -11,7 +11,7 @@ class JSErrorHelper
 			if($error["level"] == "SEVERE")
 				$result[] = $error;
 		}
-		
+
 		return $result;
 	}
 } 

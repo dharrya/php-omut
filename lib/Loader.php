@@ -24,6 +24,16 @@ class Loader
 		return $command->run($_SERVER['argv'], $exit);
 	}
 
+	public function showHelp()
+	{
+		parent::showHelp();
+
+		print <<<EOT
+  --env-config <json|file>  Load environment configuration (e.g. DBUser credentials) from json-encoded string or file.
+
+EOT;
+	}
+
 	protected function loadEnvConfig($configs)
 	{
 		if(file_exists($configs) && is_file($configs))

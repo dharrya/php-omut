@@ -2,7 +2,8 @@
 namespace lib;
 
 
-class Runtime {
+class Runtime
+{
 
 	/** @var \PHPUnit_Extensions_Selenium2TestCase_Session $session */
 	protected static $session = null;

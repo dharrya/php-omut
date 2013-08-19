@@ -1,7 +1,7 @@
 <?php
 namespace lib;
 
-use lib\Exception\Element\NotFound;
+use lib\Exception\Item\ItemNotFound;
 
 class DataBase
 	extends \PDO
@@ -38,7 +38,7 @@ class DataBase
 					$dsn = "oci:dbname=".$configs->DBName.";";
 				break;
 			default:
-				throw new NotFound(sprintf("Unsuported DataBase engine '%s'", $configs->Type));
+				throw new ItemNotFound(sprintf("Unsuported DataBase engine '%s'", $configs->Type));
 		}
 
 		return new DataBase($dsn,$configs->User, $configs->Password);

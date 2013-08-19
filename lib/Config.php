@@ -3,8 +3,8 @@ namespace lib;
 
 use lib\Exception\ConfigNotFound;
 
-class Config {
-
+class Config
+{
 	const CONFIG_DB = "DB";
 	const CONFIG_SITE = "Site";
 	const DEFAULT_CONFIGS = '{
