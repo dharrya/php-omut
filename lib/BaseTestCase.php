@@ -32,7 +32,7 @@ class BaseTestCase
 	 */
 	public function setUp()
 	{
-		$this->setBrowser("chrome");
+		$this->setBrowser("firefox");
 		$this->setBrowserUrl($this->baseUrl);
 		Runtime::setSession($this->prepareSession());
 	}
@@ -47,6 +47,36 @@ class BaseTestCase
 			$this->addMessage(sprintf("Пытаемся открыть урл: %s", $value));
 
 		return parent::url($value);
+	}
+
+	/**
+	 * @param string $jsCode
+	 * @param array $args
+	 * @return string
+	 */
+	public function execute($jsCode, $args = array())
+	{
+		return parent::execute(
+			array(
+				"script" => $jsCode,
+				"args" => $args
+			)
+		);
+	}
+
+	/**
+	 * @param string $jsCode
+	 * @param array $args
+	 * @return string
+	 */
+	public function executeAsync($jsCode, $args = array())
+	{
+		return parent::executeAsync(
+			array(
+				"script" => $jsCode,
+				"args" => $args
+			)
+		);
 	}
 
 	/**

@@ -1,8 +1,7 @@
 <?php
-
 use lib\BaseTestCase;
 
-class WebTest
+class LoginTest
 	extends BaseTestCase
 {
 	public function testLoginAndLogOut()
@@ -30,18 +29,5 @@ class WebTest
 		Cases_General_Login::logoutBus();
 		$this->assertTrue(TO_Module_Main::loginForm()->exists(), "Logout Failed :`(");
 
-	}
-
-	public function testAdminLoginInDB()
-	{
-		$query = $this->db()->query("SELECT LOGIN FROM b_user;");
-		$logins = $query->fetchAll();
-		$this->assertContains(array("LOGIN" => "admin"), $logins);
-	}
-
-	public function testTitle()
-	{
-		$this->url("/");
-		$this->assertContains("Демонстрационная", $this->title());
 	}
 }

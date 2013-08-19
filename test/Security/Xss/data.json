@@ -1,0 +1,8 @@
+{
+	"Main": [
+		{
+			"Id": "0027741",
+			"Url": "/test_xss.php?name=@PARAM@"
+		}
+	]
+}

@@ -22,7 +22,8 @@
 			"": ""
 		},
 		"classmap": [
-			"repos"
+			"repos",
+			"test/Ui"
 		]
 	}
 }

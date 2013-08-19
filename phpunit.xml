@@ -9,8 +9,11 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="App Tests">
-            <directory>test</directory>
+        <testsuite name="UI">
+            <directory>test/Ui</directory>
+        </testsuite>
+        <testsuite name="Security">
+            <directory>test/Security</directory>
         </testsuite>
     </testsuites>
 
