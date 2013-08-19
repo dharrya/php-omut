@@ -39,9 +39,14 @@ class DataBase
 			case "Mysql":
 					$dsn = "mysql:host=".$configs->Host.";dbname=".$configs->DBName.";";
 				break;
-
+			case "MSSQL":
+					$dsn = "mssql:host=".$configs->Host.";dbname=".$configs->DBName.";";
+				break;
+			case "Oracle":
+					$dsn = "oci:dbname=".$configs->DBName.";";
+				break;
 			default:
-				throw new NotFound(sprintf("Unsuported DataBase engine '%s'", $configs['Type']));
+				throw new NotFound(sprintf("Unsuported DataBase engine '%s'", $configs->Type));
 		}
 
 		return new DataBase($dsn,$configs->User, $configs->Password);
