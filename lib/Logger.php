@@ -19,14 +19,14 @@ class Logger
 	public function addError(\PHPUnit_Framework_Test $test, \Exception $e, $time)
 	{
 		self::store(
-			sprintf("Error while running test '%s'. Message: %s", $test->getName(), $e->getMessage())
+			sprintf("Error while running test '%s'. Message: %s.\nTrace:\n%s", $test->getName(), $e->getMessage(), $e->getTraceAsString())
 		);
 	}
 
 	public function addFailure(\PHPUnit_Framework_Test $test, \PHPUnit_Framework_AssertionFailedError $e, $time)
 	{
 		self::store(
-			sprintf("Test '%s' failed. Message: %s", $test->getName(), $e->getMessage())
+			sprintf("Test '%s' failed. Message: %s.\nTrace:\n%s", $test->getName(), $e->getMessage(), $e->getTraceAsString())
 		);
 	}
 
