@@ -27,21 +27,21 @@ class DataBase
 	public static function instanceFromConfig()
 	{
 		$configs = Config::getInstance()->db();
-		switch ($configs->Type) {
+		switch ($configs["Type"]) {
 			case "Mysql":
-					$dsn = "mysql:host=".$configs->Host.";dbname=".$configs->DBName.";";
+					$dsn = "mysql:host=".$configs["Host"].";dbname=".$configs["DBName"].";";
 				break;
 			case "MSSQL":
-					$dsn = "mssql:host=".$configs->Host.";dbname=".$configs->DBName.";";
+					$dsn = "mssql:host=".$configs["Host"].";dbname=".$configs["DBName"].";";
 				break;
 			case "Oracle":
-					$dsn = "oci:dbname=".$configs->DBName.";";
+					$dsn = "oci:dbname=".$configs["DBName"].";";
 				break;
 			default:
-				throw new ItemNotFound(sprintf("Unsuported DataBase engine '%s'", $configs->Type));
+				throw new ItemNotFound(sprintf("Unsuported DataBase engine '%s'", $configs["Type"]));
 		}
 
-		return new DataBase($dsn,$configs->User, $configs->Password);
+		return new DataBase($dsn,$configs["User"], $configs["Password"]);
 	}
 
 }

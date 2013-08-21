@@ -7,7 +7,16 @@ class Config
 {
 	const CONFIG_DB = "DB";
 	const CONFIG_SITE = "Site";
+	const CONFIG_BROWSER = "Browser";
 	const DEFAULT_CONFIGS = '{
+		"Browser": {
+			"browserName": "firefox",
+			"host": "localhost",
+			"port": 4444,
+			"browser": null,
+			"desiredCapabilities": [],
+			"seleniumServerRequestsTimeout": 60
+		},
 		"DB": {
 			"Type": "Mysql",
 			"Host": "localhost:3306",
@@ -29,10 +38,16 @@ class Config
 
 	private function __construct()
 	{
-		if (file_exists(self::DEFAULT_FILE_PATH) && is_file(self::DEFAULT_FILE_PATH))
-			$this->configs = json_decode(file_get_contents(self::DEFAULT_FILE_PATH));
-		else
-			$this->configs = json_decode(self::DEFAULT_CONFIGS);
+		$userConfigs = array();
+
+		if (file_exists(self::DEFAULT_FILE_PATH) && is_file(self::DEFAULT_FILE_PATH)) {
+			$userConfigs = json_decode(file_get_contents(self::DEFAULT_FILE_PATH), true);
+		}
+
+		$this->configs = array_merge(
+			json_decode(self::DEFAULT_CONFIGS, true),
+			$userConfigs
+		);
 	}
 
 	/**
@@ -41,6 +56,14 @@ class Config
 	public function db()
 	{
 		return $this->getConfig(self::CONFIG_DB);
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function browser()
+	{
+		return $this->getConfig(self::CONFIG_BROWSER);
 	}
 
 	/**
@@ -58,10 +81,10 @@ class Config
 	 */
 	public function getConfig($type)
 	{
-		if (!isset($this->configs->$type))
+		if (!isset($this->configs[$type]))
 			throw new ConfigNotFound("Config entry '{$type}' not present in configuration or not loaded propertly");
 
-		return $this->configs->$type;
+		return $this->configs[$type];
 	}
 
 	/**

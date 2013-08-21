@@ -9,22 +9,21 @@ class BaseTestCase
 	extends \PHPUnit_Extensions_Selenium2TestCase
 {
 	const LOG_TYPE = "browser";
-	const BROWSER = "firefox";
 	const IMPLICITLY_WAIT = 2;
 
-	protected $baseUrl = "http://stuff-dharrya.rhcloud.com/";
 	protected static $isSessionPersistent = false;
+	protected static $baseUrl = "http://stuff-dharrya.rhcloud.com/";
 
 	public function __construct($name = NULL, array $data = array(), $dataName = '')
 	{
 		parent::__construct($name, $data, $dataName);
-		$this->baseUrl = $this->conf()->site()->Url;
 	}
 
 	public static function setUpBeforeClass()
 	{
 		parent::setUpBeforeClass();
 		self::setPersistentSession(true);
+		self::$baseUrl = Config::getInstance()->site()["Url"];
 	}
 
 	public static function setPersistentSession($isPersistent)
@@ -39,13 +38,13 @@ class BaseTestCase
 	public function setUp()
 	{
 		parent::setUp();
-		if(!$this->isBrowserSupportedByTest())
-			$this->markTestSkipped(sprintf("'%s' browser is not supported by this test", self::BROWSER));
+		if($this->getBrowser() && !$this->isBrowserSupportedByTest())
+			$this->markTestSkipped(sprintf("'%s' browser is not supported by this test", $this->getBrowser()));
 
-		$this->setBrowser("firefox");
-		$this->setBrowserUrl($this->baseUrl);
-		$this->timeouts()->implicitWait(self::IMPLICITLY_WAIT);
+		$this->setupSpecificBrowser($this->conf()->browser());
+		$this->setBrowserUrl(self::$baseUrl);
 		Runtime::setSession($this->prepareSession());
+		$this->timeouts()->implicitWait(self::IMPLICITLY_WAIT);
 	}
 
 	public function tearDown()
@@ -136,7 +135,7 @@ class BaseTestCase
 	{
 		$availableBrowsers = $this->getAvailableBrowsers();
 
-		return !$availableBrowsers || in_array(self::BROWSER, $availableBrowsers);
+		return !$availableBrowsers || in_array($this->getBrowser(), $availableBrowsers);
 	}
 
 	/**
