@@ -15,7 +15,8 @@ class Config
 			"port": 4444,
 			"browser": null,
 			"desiredCapabilities": [],
-			"seleniumServerRequestsTimeout": 60
+			"seleniumServerRequestsTimeout": 60,
+			"sessionStrategy": "shared"
 		},
 		"DB": {
 			"Type": "Mysql",
@@ -35,20 +36,6 @@ class Config
 
 	/** @var array $configs  */
 	protected $configs = null;
-
-	private function __construct()
-	{
-		$userConfigs = array();
-
-		if (file_exists(self::DEFAULT_FILE_PATH) && is_file(self::DEFAULT_FILE_PATH)) {
-			$userConfigs = json_decode(file_get_contents(self::DEFAULT_FILE_PATH), true);
-		}
-
-		$this->configs = array_merge(
-			json_decode(self::DEFAULT_CONFIGS, true),
-			$userConfigs
-		);
-	}
 
 	/**
 	 * @return array
@@ -104,6 +91,33 @@ class Config
 			self::$instance = new Config();
 
 		return self::$instance;
+	}
+
+	private function __construct()
+	{
+		$this->configs = json_decode(self::DEFAULT_CONFIGS, true);
+
+		$userConfigs = array();
+		if (file_exists(self::DEFAULT_FILE_PATH) && is_file(self::DEFAULT_FILE_PATH)) {
+			$userConfigs = json_decode(file_get_contents(self::DEFAULT_FILE_PATH), true);
+		}
+		$this->replaceSettings($userConfigs);
+	}
+
+	protected function replaceSettings($settings)
+	{
+		if (!is_array($settings))
+			return;
+
+		foreach($settings as $type => $setting) {
+			if (is_array($setting)) {
+				foreach($setting as $key => $value) {
+					$this->configs[$type][$key] = $value;
+				}
+			} else {
+				$this->configs[$type] = $setting;
+			}
+		}
 	}
 
 	private function __clone() {}
