@@ -13,10 +13,13 @@ class BaseTestCase
 
 	protected static $isSessionPersistent = false;
 	protected static $baseUrl = "http://stuff-dharrya.rhcloud.com/";
+	protected static $initialized = false;
 
 	public static function setUpBeforeClass()
 	{
-		self::setPersistentSession(true);
+		if (self::$initialized)
+			return;
+
 		self::$baseUrl = Config::getInstance()->site()["Url"];
 	}
 
