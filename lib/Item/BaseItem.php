@@ -1,6 +1,8 @@
 <?php
 namespace lib\Item;
 use lib\Exception\Item\ItemNotFound;
+use lib\Logger;
+use lib\Runtime;
 
 /**
  * Class WebItem
@@ -27,10 +29,12 @@ abstract class BaseItem
 	/** @var \PHPUnit_Extensions_Selenium2TestCase_Element $element */
 	protected $element = null;
 	protected $isExist = true;
+	protected $readableName = "";
 
-	public function __construct(\PHPUnit_Extensions_Selenium2TestCase_Element $element)
+	public function __construct(\PHPUnit_Extensions_Selenium2TestCase_Element $element, $readableName = "")
 	{
 		$this->element = $element;
+		$this->readableName = $readableName;
 	}
 
 	/**
@@ -62,8 +66,17 @@ abstract class BaseItem
 	 */
 	public function __call($command, $arguments)
 	{
-		if (!$this->isExist)
+		if ($this->readableName) {
+			Logger::addMessage(sprintf(
+					"'%s' element call: %s(%s)",
+					$this->readableName, $command, implode(", ", $arguments)
+				)
+			);
+		}
+
+		if (!$this->isExist) {
 			throw new ItemNotFound('Trying use a non-existent object');
+		}
 
 		$result = call_user_func_array(
 			array($this->element, $command), $arguments
