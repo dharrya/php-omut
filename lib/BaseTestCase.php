@@ -11,6 +11,7 @@ class BaseTestCase
 	const LOG_TYPE = "browser";
 
 	protected $baseUrl = "http://stuff-dharrya.rhcloud.com/";
+	protected static $isSessionPersistent = false;
 
 	public function __construct($name = NULL, array $data = array(), $dataName = '')
 	{
@@ -18,23 +19,42 @@ class BaseTestCase
 		$this->baseUrl = $this->conf()->site()->Url;
 	}
 
-	/**
-	 *
-	 */
 	public static function setUpBeforeClass()
 	{
-		self::shareSession(true);
-
+		parent::setUpBeforeClass();
+		self::setPersistentSession(true);
 	}
 
-	/**
-	 *
-	 */
+	public static function setPersistentSession($isPersistent)
+	{
+		if(self::$isSessionPersistent == $isPersistent)
+			return;
+
+		self::shareSession($isPersistent);
+		self::$isSessionPersistent = $isPersistent;
+	}
+
 	public function setUp()
 	{
+		parent::setUp();
 		$this->setBrowser("firefox");
 		$this->setBrowserUrl($this->baseUrl);
 		Runtime::setSession($this->prepareSession());
+	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+		$jsErrors = $this->log(self::LOG_TYPE);
+		$jsErrors = JSErrorHelper::filterErrors($jsErrors);
+		if (!empty($jsErrors)) {
+			$this->addMessage(
+				sprintf(
+					"Browser Error occurred on page: %s\nErrors messages: %s",
+					$this->url(), json_encode($jsErrors)
+				)
+			);
+		}
 	}
 
 	/**
@@ -77,23 +97,6 @@ class BaseTestCase
 				"args" => $args
 			)
 		);
-	}
-
-	/**
-	 *
-	 */
-	public function tearDown()
-	{
-		$jsErrors = $this->log(self::LOG_TYPE);
-		$jsErrors = JSErrorHelper::filterErrors($jsErrors);
-		if (!empty($jsErrors)) {
-			$this->addMessage(
-				sprintf(
-					"Browser Error occurred on page: %s\nErrors messages: %s",
-					$this->url(), json_encode($jsErrors)
-				)
-			);
-		}
 	}
 
 	/**
