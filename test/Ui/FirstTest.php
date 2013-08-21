@@ -4,6 +4,11 @@ use lib\BaseTestCase;
 class FirstTest
 	extends BaseTestCase
 {
+
+	/**
+	 *
+	 * @browser chrome
+	 */
 	public function testAdminLoginInDB()
 	{
 		$this->url("/");
@@ -12,6 +17,10 @@ class FirstTest
 		$this->assertContains(array("LOGIN" => "admin"), $logins);
 	}
 
+	/**
+	 *
+	 * @browser chrome, firefox
+	 */
 	public function testTitle()
 	{
 		$this->url("/");

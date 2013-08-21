@@ -2,6 +2,7 @@
 namespace lib;
 
 
+use lib\Helper\DocParser;
 use lib\Helper\JSErrorHelper;
 
 class BaseTestCase
@@ -9,6 +10,7 @@ class BaseTestCase
 {
 
 	const LOG_TYPE = "browser";
+	const BROWSER = "firefox";
 
 	protected $baseUrl = "http://stuff-dharrya.rhcloud.com/";
 	protected static $isSessionPersistent = false;
@@ -37,6 +39,9 @@ class BaseTestCase
 	public function setUp()
 	{
 		parent::setUp();
+		if(!$this->isBrowserSupportedByTest())
+			$this->markTestSkipped(sprintf("'%s' browser is not supported by this test", self::BROWSER));
+
 		$this->setBrowser("firefox");
 		$this->setBrowserUrl($this->baseUrl);
 		Runtime::setSession($this->prepareSession());
@@ -121,5 +126,39 @@ class BaseTestCase
 	protected function addMessage($message)
 	{
 		Logger::addMessage($message);
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isBrowserSupportedByTest()
+	{
+		$availableBrowsers = $this->getAvailableBrowsers();
+
+		return !$availableBrowsers || in_array(self::BROWSER, $availableBrowsers);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAvailableBrowsers()
+	{
+		$testAnnotationValue = DocParser::getMethodTagValue(
+			get_class($this),
+			$this->getName(),
+			'browser'
+		);
+		if($testAnnotationValue) {
+			$browsers = explode(",", $testAnnotationValue);
+			foreach($browsers as &$browser) {
+				$browser = trim($browser);
+			}
+			unset($browser);
+		} else {
+			$browsers = false;
+		}
+
+
+		return $browsers;
 	}
 }
