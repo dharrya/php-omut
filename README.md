@@ -5,7 +5,7 @@ A simple php framework for UI-testing based on [PHPUnit-Selenium](https://github
 
 ## Requirements
 * Git :)
-* PHP > 5.3.0 whith Phar, Curl, OpenSSL and PDO (if you need DataBase) support
+* PHP >= 5.4.7 whith Phar, Curl, OpenSSL and PDO (if you need DataBase) support
 * [Composer](http://getcomposer.org/)
 
 ## Installation
