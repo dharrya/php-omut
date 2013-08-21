@@ -8,9 +8,9 @@ use lib\Helper\JSErrorHelper;
 class BaseTestCase
 	extends \PHPUnit_Extensions_Selenium2TestCase
 {
-
 	const LOG_TYPE = "browser";
 	const BROWSER = "firefox";
+	const IMPLICITLY_WAIT = 2;
 
 	protected $baseUrl = "http://stuff-dharrya.rhcloud.com/";
 	protected static $isSessionPersistent = false;
@@ -44,6 +44,7 @@ class BaseTestCase
 
 		$this->setBrowser("firefox");
 		$this->setBrowserUrl($this->baseUrl);
+		$this->timeouts()->implicitWait(self::IMPLICITLY_WAIT);
 		Runtime::setSession($this->prepareSession());
 	}
 
