@@ -33,7 +33,7 @@ class Config
 	const DEFAULT_FILE_PATH = 'env.json';
 	protected static $instance = null;
 
-	/** @var \stdClass $configs  */
+	/** @var array $configs  */
 	protected $configs = null;
 
 	private function __construct()
@@ -51,7 +51,7 @@ class Config
 	}
 
 	/**
-	 * @return mixed
+	 * @return array
 	 */
 	public function db()
 	{
@@ -59,7 +59,7 @@ class Config
 	}
 
 	/**
-	 * @return mixed
+	 * @return array
 	 */
 	public function browser()
 	{
@@ -67,7 +67,7 @@ class Config
 	}
 
 	/**
-	 * @return mixed
+	 * @return array
 	 */
 	public function site()
 	{
@@ -76,7 +76,7 @@ class Config
 
 	/**
 	 * @param string $type
-	 * @return mixed
+	 * @return array
 	 * @throws Exception\ConfigNotFound
 	 */
 	public function getConfig($type)

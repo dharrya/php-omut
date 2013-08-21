@@ -14,14 +14,8 @@ class BaseTestCase
 	protected static $isSessionPersistent = false;
 	protected static $baseUrl = "http://stuff-dharrya.rhcloud.com/";
 
-	public function __construct($name = NULL, array $data = array(), $dataName = '')
-	{
-		parent::__construct($name, $data, $dataName);
-	}
-
 	public static function setUpBeforeClass()
 	{
-		parent::setUpBeforeClass();
 		self::setPersistentSession(true);
 		self::$baseUrl = Config::getInstance()->site()["Url"];
 	}
@@ -37,7 +31,6 @@ class BaseTestCase
 
 	public function setUp()
 	{
-		parent::setUp();
 		if($this->getBrowser() && !$this->isBrowserSupportedByTest())
 			$this->markTestSkipped(sprintf("'%s' browser is not supported by this test", $this->getBrowser()));
 
