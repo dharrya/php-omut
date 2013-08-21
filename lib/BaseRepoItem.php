@@ -1,78 +1,45 @@
 <?php
 namespace lib;
+
+use lib\Helper\DocParser;
 use lib\Item\WebItem;
 
+/**
+ * Class BaseRepoItem
+ * @package lib
+ *
+ * @method static \lib\Item\WebItem webElementByXpath($path, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByClassName($className, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByCssSelector($selector, $readableName = "")
+ * @method static \lib\Item\WebItem webElementById($id, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByLinkText($text, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByPartialLinkText($text, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByName($name, $readableName = "")
+ * @method static \lib\Item\WebItem webElementByTag($tag, $readableName = "")
+ */
 class BaseRepoItem
 {
-	/**
-	 * @param string $path
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByXpath($path)
+	public static function __callStatic($selector, $arguments)
 	{
-		return \lib\Item\WebItem::byXPath($path);
+		if (strpos($selector, "webElement") !== 0)
+			throw new \BadMethodCallException("Method '{$selector}' not implemented in RepoItem");
+
+		if (!isset($arguments[1]) || !$arguments[1])
+			$arguments[1] = self::getCallerReadableName();
+
+		list($value, $readableName) = $arguments;
+		$selector = substr($selector, strlen("webElement"));
+		return WebItem::$selector($value, $readableName);
 	}
 
-	/**
-	 * @param string $className
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByClassName($className)
+	private static function getCallerReadableName($depth = 3)
 	{
-		return \lib\Item\WebItem::byClassName($className);
-	}
-
-	/**
-	 * @param string $selector
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByCssSelector($selector)
-	{
-		return \lib\Item\WebItem::byCssSelector($selector);
-	}
-
-	/**
-	 * @param string $id
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementById($id)
-	{
-		return \lib\Item\WebItem::byId($id);
-	}
-
-	/**
-	 * @param string $text
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByLinkText($text)
-	{
-		return \lib\Item\WebItem::byLinkText($text);
-	}
-
-	/**
-	 * @param string $text
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByPartialLinkText($text)
-	{
-		return \lib\Item\WebItem::byPartialLinkText($text);
-	}
-
-	/**
-	 * @param string $name
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByName($name)
-	{
-		return \lib\Item\WebItem::byName($name);
-	}
-
-	/**
-	 * @param string $tag
-	 * @return \lib\Item\WebItem
-	 */
-	protected static function webElementByTag($tag)
-	{
-		return \lib\Item\WebItem::byTag($tag);
+		$callStack = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT | DEBUG_BACKTRACE_IGNORE_ARGS, $depth + 1);
+		$caller = array_pop($callStack);
+		return DocParser::getMethodTagValue(
+			$caller["class"],
+			$caller["function"],
+			"readable"
+		);
 	}
 }

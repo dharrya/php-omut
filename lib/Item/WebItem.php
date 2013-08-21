@@ -6,14 +6,14 @@ use lib\Runtime;
  * Class WebItem
  *
  * @package lib
- * @method static \lib\Item\WebItem byClassName($value)
- * @method static \lib\Item\WebItem byCssSelector($value)
- * @method static \lib\Item\WebItem byId($value)
- * @method static \lib\Item\WebItem byLinkText($value)
- * @method static \lib\Item\WebItem byPartialLinkText($value)
- * @method static \lib\Item\WebItem byName($value)
- * @method static \lib\Item\WebItem byTag($value)
- * @method static \lib\Item\WebItem byXPath($value)
+ * @method static \lib\Item\WebItem byClassName($className, $readableName = "")
+ * @method static \lib\Item\WebItem byCssSelector($selector, $readableName = "")
+ * @method static \lib\Item\WebItem byId($id, $readableName = "")
+ * @method static \lib\Item\WebItem byLinkText($text, $readableName = "")
+ * @method static \lib\Item\WebItem byPartialLinkText($text, $readableName = "")
+ * @method static \lib\Item\WebItem byName($name, $readableName = "")
+ * @method static \lib\Item\WebItem byTag($tag, $readableName = "")
+ * @method static \lib\Item\WebItem byXPath($path, $readableName = "")
  */
 class WebItem
 	extends AssertationItem
@@ -29,10 +29,12 @@ class WebItem
 	public static function __callStatic($accessor, $arguments)
 	{
 		try {
-			$element = call_user_func_array(
-				array(Runtime::session(), $accessor), $arguments
-			);
-			$result = new static($element);
+			if(!isset($arguments[1]))
+				$arguments[1] = "";
+			list($value, $readableName) = $arguments;
+
+			$element = Runtime::session()->$accessor($value);
+			$result = new static($element, $readableName);
 		} catch (\PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
 			$result = new NullWebItem();
 		}
