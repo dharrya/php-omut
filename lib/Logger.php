@@ -8,7 +8,7 @@ class Logger
 
 	public function __construct($directory)
 	{
-		self::$filePath = $directory."/execution_".date("d-m-Y\TH-i-s").".log";
+		self::$filePath = __DIR__."/../".$directory."/execution_".date("d-m-Y\TH-i-s").".log";
 	}
 
 	public static function addMessage($message)
