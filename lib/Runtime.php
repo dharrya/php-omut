@@ -11,7 +11,7 @@ class Runtime
 	/**
 	 * @param \PHPUnit_Extensions_Selenium2TestCase_Session $session
 	 */
-	
+
 	public static function setSession(\PHPUnit_Extensions_Selenium2TestCase_Session $session)
 	{
 		self::$session = $session;

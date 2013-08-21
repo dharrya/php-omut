@@ -1,5 +1,7 @@
 <?php
 
+use lib\BasicItem;
+
 class TO_General_TextBox
 	extends BasicItem
 {

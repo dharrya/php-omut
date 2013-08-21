@@ -1,5 +1,7 @@
 <?php
 
+use lib\BasicItem;
+
 class TO_General_Button
 	extends BasicItem
 {

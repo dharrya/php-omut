@@ -1,5 +1,7 @@
 <?php
 
+use lib\BasicItem;
+
 class Cases_General_Login
 	extends BasicItem
 {

@@ -1,5 +1,5 @@
 <?php
-use lib\Runtime;
+namespace lib;
 use lib\Item\WebItem;
 
 class BasicItem
