@@ -19,7 +19,6 @@ use lib\Exception\Item\ItemNotFound;
  * @method bool selected() Checks the state of an option or other form element
  * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
  * @method void submit() Submits a form; can be called on its children
- * @method string value($newValue = null) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
  * @method string text() Get content of ordinary elements
  *
  */
@@ -97,5 +96,21 @@ abstract class BaseItem
 	public function innerHtml()
 	{
 		return $this->attribute('innerHTML');
+	}
+
+	/**
+	 * Get or set value of form elements.
+	 * By default if the element already has a value it will be overwritten.
+	 *
+	 * @param null|string $newValue
+	 * @param bool $isClearBeforeSend
+	 * @return mixed
+	 */
+	public function value($newValue = null, $isClearBeforeSend = true)
+	{
+		if ($newValue && $isClearBeforeSend)
+			$this->clear();
+
+		return $this->__call("value", array($newValue));
 	}
 } 
