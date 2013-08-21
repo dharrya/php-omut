@@ -1,9 +1,9 @@
 <?php
 
-use lib\BasicItem;
+use lib\BaseRepoItem;
 
 class TO_Module_Main
-	extends BasicItem
+	extends BaseRepoItem
 {
 
 	public static function buttonCalendarDate($day)

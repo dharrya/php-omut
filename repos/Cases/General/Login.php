@@ -1,9 +1,9 @@
 <?php
 
-use lib\BasicItem;
+use lib\BaseRepoItem;
 
 class Cases_General_Login
-	extends BasicItem
+	extends BaseRepoItem
 {
 
 	/**

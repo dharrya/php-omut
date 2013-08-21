@@ -1,9 +1,9 @@
 <?php
 
-use lib\BasicItem;
+use lib\BaseRepoItem;
 
 class TO_General_TextBox
-	extends BasicItem
+	extends BaseRepoItem
 {
 	/**
 	 * USER_LOGIN input

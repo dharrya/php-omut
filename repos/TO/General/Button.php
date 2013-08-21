@@ -1,9 +1,9 @@
 <?php
 
-use lib\BasicItem;
+use lib\BaseRepoItem;
 
 class TO_General_Button
-	extends BasicItem
+	extends BaseRepoItem
 {
 	public static function login()
 	{

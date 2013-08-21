@@ -2,7 +2,7 @@
 namespace lib;
 use lib\Item\WebItem;
 
-class BasicItem
+class BaseRepoItem
 {
 	/**
 	 * @param string $path
