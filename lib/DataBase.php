@@ -26,7 +26,7 @@ class DataBase
 
 	public static function instanceFromConfig()
 	{
-		$configs = Config::getInstance()->db();
+		$configs = Config::getInstance()->DB;
 		switch ($configs["Type"]) {
 			case "Mysql":
 					$dsn = "mysql:host=".$configs["Host"].";dbname=".$configs["DBName"].";";

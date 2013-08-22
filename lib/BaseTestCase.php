@@ -20,7 +20,7 @@ class BaseTestCase
 		if (self::$initialized)
 			return;
 
-		self::$baseUrl = Config::getInstance()->site()["Url"];
+		self::$baseUrl = Config::getInstance()->Site["Url"];
 	}
 
 	public static function setPersistentSession($isPersistent)
@@ -37,7 +37,7 @@ class BaseTestCase
 		if($this->getBrowser() && !$this->isBrowserSupportedByTest())
 			$this->markTestSkipped(sprintf("'%s' browser is not supported by this test", $this->getBrowser()));
 
-		$this->setupSpecificBrowser($this->conf()->browser());
+		$this->setupSpecificBrowser($this->conf()->Browser);
 		$this->setBrowserUrl(self::$baseUrl);
 		Runtime::setSession($this->prepareSession());
 		$this->timeouts()->implicitWait(self::IMPLICITLY_WAIT);
@@ -58,6 +58,19 @@ class BaseTestCase
 		}
 	}
 
+
+	/**
+	 * @return string
+	 */
+	public function getBrowser()
+	{
+		$result = parent::getBrowser();
+		if (!$result)
+			$result = $this->conf()->Browser["browserName"];
+
+		return $result;
+	}
+
 	/**
 	 * @param null|string $value
 	 * @return string|void
@@ -65,7 +78,7 @@ class BaseTestCase
 	public function url($value = null)
 	{
 		if ($value)
-			$this->addMessage(sprintf("Пытаемся открыть урл: %s", $value));
+			$this->addMessage(sprintf("Открываем урл: %s", $value));
 
 		return parent::url($value);
 	}

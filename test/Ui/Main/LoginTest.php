@@ -11,8 +11,8 @@ class LoginTest
 			$this->addMessage("Форма логина не найдена, логаутимся");
 			Cases_General_Login::logoutBus();
 		}
-		$login = $this->conf()->site()["UserName"];
-		$password = $this->conf()->site()["Password"];
+		$login = $this->conf()->Site["UserName"];
+		$password = $this->conf()->Site["Password"];
 
 		$this->addMessage(
 			sprintf(

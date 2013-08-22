@@ -3,6 +3,13 @@ namespace lib;
 
 use lib\Exception\ConfigNotFound;
 
+/**
+ * Class Config
+ * @package lib
+ * @property array $Browser
+ * @property array $DB
+ * @property array $Site
+ */
 class Config
 {
 	const CONFIG_DB = "DB";
@@ -37,28 +44,16 @@ class Config
 	/** @var array $configs  */
 	protected $configs = null;
 
-	/**
-	 * @return array
-	 */
-	public function db()
+
+	public function __get($type)
 	{
-		return $this->getConfig(self::CONFIG_DB);
+		return $this->getConfig($type);
 	}
 
-	/**
-	 * @return array
-	 */
-	public function browser()
-	{
-		return $this->getConfig(self::CONFIG_BROWSER);
-	}
 
-	/**
-	 * @return array
-	 */
-	public function site()
+	public function __isset($type)
 	{
-		return $this->getConfig(self::CONFIG_SITE);
+		return isset($this->configs[$type]);
 	}
 
 	/**
