@@ -7,7 +7,7 @@ class TO_Module_Main
 {
 
 	/**
-	 * @readable Форма логина
+	 * @logname Форма логина
 	 * @return \lib\Item\WebItem
 	 */
 	public static function loginForm()
@@ -17,7 +17,7 @@ class TO_Module_Main
 	}
 
 	/**
-	 * @readable Форма логина
+	 * @logname Форма логина
 	 * @return \lib\Item\WebItem
 	 */
 	public static function logoutForm()

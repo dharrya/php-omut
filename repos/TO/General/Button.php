@@ -7,7 +7,7 @@ class TO_General_Button
 {
 
 	/**
-	 * @readable Батон логина
+	 * @logname Батон логина
 	 * @return \lib\Item\WebItem
 	 */
 	public static function login()
@@ -17,7 +17,7 @@ class TO_General_Button
 
 
 	/**
-	 * @readable Батон логаута
+	 * @logname Батон логаута
 	 * @return \lib\Item\WebItem
 	 */
 	public static function logout()

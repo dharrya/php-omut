@@ -8,7 +8,7 @@ class TO_General_TextBox
 	/**
 	 * USER_LOGIN input
 	 *
-	 * @readable Интуп логина
+	 * @logname Интуп логина
 	 * @return \lib\Item\WebItem
 	 */
 	public static function userLogin()
@@ -19,7 +19,7 @@ class TO_General_TextBox
 	/**
 	 * USER_PASSWORD input
 	 *
-	 * @readable Инпут пароля
+	 * @logname Инпут пароля
 	 * @return \lib\Item\WebItem
 	 */
 	public static function userPassword()

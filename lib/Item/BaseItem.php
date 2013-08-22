@@ -29,12 +29,12 @@ abstract class BaseItem
 	/** @var \PHPUnit_Extensions_Selenium2TestCase_Element $element */
 	protected $element = null;
 	protected $isExist = true;
-	protected $readableName = "";
+	protected $logName = "";
 
-	public function __construct(\PHPUnit_Extensions_Selenium2TestCase_Element $element, $readableName = "")
+	public function __construct(\PHPUnit_Extensions_Selenium2TestCase_Element $element, $logName = "")
 	{
 		$this->element = $element;
-		$this->readableName = $readableName;
+		$this->logName = $logName;
 	}
 
 	/**
@@ -66,10 +66,10 @@ abstract class BaseItem
 	 */
 	public function __call($command, $arguments)
 	{
-		if ($this->readableName) {
+		if ($this->logName) {
 			Logger::addMessage(sprintf(
-					"'%s' element call: %s(%s)",
-					$this->readableName, $command, implode(", ", $arguments)
+					"'%s'-> %s(%s)",
+					$this->logName, $command, implode(", ", $arguments)
 				)
 			);
 		}
