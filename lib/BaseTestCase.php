@@ -154,7 +154,7 @@ class BaseTestCase
 	{
 		$testAnnotationValue = DocParser::getMethodTagValue(
 			get_class($this),
-			$this->getName(),
+			$this->getName(false),
 			'browser'
 		);
 		if($testAnnotationValue) {
